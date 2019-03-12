@@ -1,5 +1,8 @@
+//Code tested in Linux Mint 19 and Windows. Both worked.
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 //structure to store the data
 typedef struct data{
@@ -7,7 +10,8 @@ typedef struct data{
   int content;
 }data;
 
-int linked =0;
+int linked = 0, search_value;
+bool break_looping = true;
 
 struct data *auxiliar, *chain, *root;
 
@@ -29,8 +33,11 @@ int main()
     case 1:
     Insert(Insert);
     break;
+
     case 2:
+    Search(Search);
     break;
+
     case 0:
     system("clear");
     return 0;
@@ -154,4 +161,83 @@ Insert(data**List){
     }
 
   }
+}
+
+Search(data**List){
+
+  printf("\n\n\nNumber to search: ");
+  scanf("%d", &search_value);
+  auxiliar = root;
+  printf("\n%d   ", auxiliar -> content);
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////right///////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  if(search_value > root -> content){//VAI PARA A right
+
+    while(linked == 0){
+
+      break_looping = true;
+
+      if(search_value == auxiliar -> content){
+        printf("\n\ncontent found\n\n");
+        break;
+      }
+
+      if((search_value > auxiliar -> content) && (auxiliar -> right != NULL)){//goes to the right
+        auxiliar = auxiliar -> right;
+        printf("\n%i   ", auxiliar -> content);
+        break_looping = false;
+      }
+
+      if((search_value < auxiliar -> content) && (auxiliar -> left != NULL)){//goes to the left
+        auxiliar = auxiliar -> left;
+        printf("\n%i   ", auxiliar -> content);
+        break_looping = false;
+      }
+
+      if(break_looping == true){
+        printf("\n\ncontent not found\n\n");
+        break;
+      }
+
+    } //while end
+    linked = 0;
+  }
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////left////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+  if(search_value < root -> content){
+
+    while(linked == 0){
+
+      break_looping = true;
+
+      if(search_value == auxiliar -> content){
+        printf("\n\ncontent found\n\n");
+        break;
+      }
+
+      if((search_value > auxiliar -> content) && (auxiliar -> right != NULL)){//goes to the right
+        auxiliar = auxiliar -> right;
+        printf("\n%i   ", auxiliar -> content);
+        break_looping = false;
+      }
+
+      if((search_value < auxiliar -> content) && (auxiliar -> left != NULL)){//goes to the left
+        auxiliar = auxiliar -> left;
+        printf("\n%i   ", auxiliar -> content);
+        break_looping = false;
+      }
+
+      if(break_looping == true){
+        printf("\n\ncontent not found\n\n");
+        break;
+      }
+
+    } //while end
+    linked = 0;
+  }
+
 }
